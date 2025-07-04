@@ -1,11 +1,14 @@
 #! /usr/bin/python3
-
 import socket
-s = socket.socket() # we set "s" as our socket.socket()
-s.connect(("127.0.0.1", 22)) # feel free to change ip and port
 
-answer = s.recv(1024) # receive and read the 1024 bytes of data from socket
+try:
+    with socket.socket() as s: # set s as socket
+        
+        s.connect(("127.0.0.1", 22))
+        
+        answer = s.recv(1024)
+  
+        print(answer.decode()) #.decode() converts a bytes object into a string
 
-print(answer)
-s.close() # close the connection
-print("Connection closed")
+except ConnectionRefusedError: # 'except' catches the error if the server is not running
+    print("Connection closed")
